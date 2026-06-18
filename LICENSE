@@ -1,0 +1,40 @@
+AeroShip Saver
+Copyright (c) 2026 levisnakes
+
+This work is licensed under the Creative Commons
+Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
+
+You are free to:
+  - Share — copy and redistribute the material in any medium or format
+  - Adapt — remix, transform, and build upon the material
+
+Under the following terms:
+  - Attribution — You must give appropriate credit, provide a link to the
+    license, and indicate if changes were made.
+  - NonCommercial — You may not use the material for commercial purposes.
+
+Full license text:  https://creativecommons.org/licenses/by-nc/4.0/legalcode
+Human-readable deed: https://creativecommons.org/licenses/by-nc/4.0/
+
+--------------------------------------------------------------------------
+ATTRIBUTION / THIRD-PARTY CODE
+--------------------------------------------------------------------------
+
+AeroShip Saver bundles and adapts the ship save/load engine from the
+"Create Aeronautics: Toolgun" mod by enxv233, which is licensed under
+CC BY-NC 4.0. All credit for that engine (SubLevelFileStore, the constraint
+and contraption restore managers, the blueprint preview, and related code
+under the package com.enxv.aeronauticsstructuretool) belongs to enxv233.
+
+Changes made by this project:
+  - Removed the @Mod entry class and all item/block/block-entity/creative-tab
+    and network-payload registration, replacing them with no-op stubs, so the
+    mod registers no synced content.
+  - Added a content-free command + keybind front end (com.levi.aeroshipsaver)
+    and a redesigned in-game menu.
+
+Because the bundled engine is CC BY-NC 4.0, this project is released under the
+same license and is provided strictly for non-commercial use.
+
+This mod also depends on (but does not bundle) Create, Create: Aeronautics,
+and Sable, which remain under their own respective licenses.
