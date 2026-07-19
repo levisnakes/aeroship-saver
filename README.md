@@ -49,6 +49,14 @@ Tested and working: single and multi-sub-level ships (7+ sub-levels), swivel bea
 other mounted contraptions, wireless redstone links, repeated loads, persistence across game
 restarts, and — the whole point — **joining a survival server that doesn't run this mod**.
 
+## Multiplayer (Essential / LAN)
+
+`/aeroship save` runs on the server, so on a hosted world the file is written on the **host's**
+machine. To fix that, the mod sends the saved blueprint back to the player who saved it over a
+single **optional** network channel, so it also lands in *your* local `enxv_aeronautics_structures`
+folder and shows up in your menu. Optional channels are ignored by servers that don't have the
+mod, so this does not affect joining a server without it. Both host and guest need the mod.
+
 ## Known limitation
 
 After loading, some swivel bearings may revert to **locked** even if you'd set them to

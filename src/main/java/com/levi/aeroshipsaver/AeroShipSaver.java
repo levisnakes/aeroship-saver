@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import com.enxv.aeronauticsstructuretool.AeronauticsStructureToolMod;
+import com.levi.aeroshipsaver.net.AeroNetwork;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -37,6 +38,9 @@ public class AeroShipSaver {
         // Drain the runtime-contraption restore queue on server ticks so mounted
         // contraptions (swivel bearings, etc.) come back after a load.
         NeoForge.EVENT_BUS.register(AeronauticsStructureToolMod.RESTORE_MANAGER);
+        // One OPTIONAL channel, used only to hand a saved blueprint back to the player who
+        // saved it (so Essential/LAN guests get the file, not just the host).
+        modEventBus.addListener(AeroNetwork::register);
         LOGGER.info("AeroShip Saver loaded (content-free Aeronautics ship save/load).");
     }
 }

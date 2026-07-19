@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.enxv.aeronauticsstructuretool.SubLevelFileStore;
+import com.levi.aeroshipsaver.net.AeroNetwork;
 import com.mojang.brigadier.CommandDispatcher;
 import dev.ryanhcode.sable.Sable;
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
@@ -151,7 +152,12 @@ public final class AeroCommands {
             // Capture by the ship's id, pulling in connected sub-levels (bearings, sub-contraptions).
             SubLevelFileStore.SavedBlueprint saved =
                 SubLevelFileStore.capture(level, ship.getUniqueId(), name, CONNECTED_PROXIMITY);
+            // Server-side copy: this is what /aeroship load reads back.
             SubLevelFileStore.writeClientBlueprint(saved.fileName(), saved.fileContents());
+            // ...and hand it to the saving player so it also lands on THEIR machine.
+            // (Under Essential/LAN the command runs on the host, so without this the file
+            // would only ever exist on the host's disk.)
+            AeroNetwork.sendBlueprint(player, saved.fileName(), saved.fileContents());
             int bytes = saved.fileContents().length;
             int subs = countSubLevels(saved.fileContents());
             source.sendSuccess(() -> Component.literal("Saved ship '" + SubLevelFileStore.sanitize(name)
