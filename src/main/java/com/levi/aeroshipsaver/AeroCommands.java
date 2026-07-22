@@ -225,7 +225,10 @@ public final class AeroCommands {
         ServerPlayer player = source.getPlayerOrException();
         ServerLevel level = player.serverLevel();
         if (!Files.exists(saveDir().resolve(SubLevelFileStore.sanitize(name) + SubLevelFileStore.FILE_EXTENSION))) {
-            source.sendFailure(Component.literal("No saved ship named '" + SubLevelFileStore.sanitize(name) + "'. Use /aeroship list."));
+            source.sendFailure(Component.literal("The server has no saved ship named '"
+                + SubLevelFileStore.sanitize(name) + "'."));
+            source.sendFailure(Component.literal("If it's saved on YOUR machine (another world, or you're a guest "
+                + "on a hosted world), press G and use the menu's Load button - that sends your copy to the server."));
             return 0;
         }
         try {

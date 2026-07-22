@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import com.enxv.aeronauticsstructuretool.AeroPreview;
 import com.enxv.aeronauticsstructuretool.AeroPreviewRenderer;
 import com.enxv.aeronauticsstructuretool.SubLevelFileStore;
+import com.levi.aeroshipsaver.net.AeroNetwork;
 
 import dev.ryanhcode.sable.api.sublevel.SubLevelContainer;
 import dev.ryanhcode.sable.companion.math.BoundingBox3d;
@@ -152,7 +153,7 @@ public class AeroShipScreen extends Screen {
         int rw = PANEL_W / 2 - 18;
         int by = top + PANEL_H - 28;
         this.addRenderableWidget(Button.builder(Component.literal("Load"), b -> {
-                if (this.selected != null) { runCommand("aeroship load " + this.selected); this.onClose(); }
+                if (this.selected != null) { loadSelected(); this.onClose(); }
             }).bounds(rx, by, rw - 66, 18).build());
         this.addRenderableWidget(Button.builder(Component.literal("Delete"), b -> {
                 if (this.selected != null) {
@@ -162,6 +163,37 @@ public class AeroShipScreen extends Screen {
                     });
                 }
             }).bounds(rx + rw - 62, by, 62, 18).build());
+    }
+
+    /**
+     * Load the selected ship by sending its bytes to the server. The server may not have the
+     * file at all (another world, or an Essential host that never saw a guest's save), so we
+     * ship the contents rather than just the name. Falls back to the plain command if the
+     * local file can't be read.
+     */
+    private void loadSelected() {
+        Path file = saveDir().resolve(this.selected + SubLevelFileStore.FILE_EXTENSION);
+        byte[] bytes;
+        try {
+            bytes = Files.readAllBytes(file);
+        } catch (Exception e) {
+            chat("§cAeroShip Saver: couldn't read '" + this.selected + "' from " + file + " (" + e + ")");
+            return;
+        }
+        try {
+            AeroNetwork.requestLoad(this.selected, bytes);
+        } catch (Throwable t) {
+            // Don't silently fall back to the server-side command: it reads the SERVER's disk
+            // and would just report "not found", hiding the real cause.
+            chat("§cAeroShip Saver: the server didn't accept the load packet (" + t + ").");
+            chat("§7Both host and guest need AeroShip Saver installed, same version.");
+        }
+    }
+
+    private void chat(String message) {
+        if (this.minecraft != null && this.minecraft.player != null) {
+            this.minecraft.player.displayClientMessage(Component.literal(message), false);
+        }
     }
 
     private void select(String name) {

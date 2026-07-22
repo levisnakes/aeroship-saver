@@ -2,15 +2,16 @@
 
 A **content-free** NeoForge 1.21.1 mod that saves and loads **real Create: Aeronautics
 ships** (physical structures / sub-levels, with their mounted contraptions) via a command
-and a keybind — with **no items, no blocks, and no network packets of its own**.
+and a keybind — with **no items, no blocks**, and only two **optional** network packets.
 
-Because it registers nothing synced, it does **not** break logging in to a multiplayer
-server that doesn't have it. Install it in your singleplayer profile, save your ships, and
-still join your survival server with the same instance.
+Because it registers no synced content, and its packets are optional (servers that lack them
+simply ignore them), it does **not** break logging in to a multiplayer server that doesn't
+have it. Install it in your singleplayer profile, save your ships, and still join your
+survival server with the same instance.
 
 - **Minecraft:** 1.21.1 · **Loader:** NeoForge 21.1.230+
 - **Requires (already in your modpack):** Create, Create: Aeronautics (`aeronautics_bundled`), Sable
-- **Built jar:** `build/libs/aeroshipsaver-1.0.0.jar`
+- **Built jar:** `build/libs/aeroshipsaver-1.1.0.jar`
 - **License:** CC BY-NC 4.0 · **Credit:** bundles & adapts the save/load engine from the [Create Aeronautics: Toolgun](https://modrinth.com/mod/create-aeronautics-toolgun) by **enxv233** (CC BY-NC 4.0). See [LICENSE](LICENSE).
 
 ## How it works
@@ -25,7 +26,7 @@ come back after a load.
 
 ## Install
 
-Put `aeroshipsaver-1.0.0.jar` in the `mods` folder of your singleplayer profile (alongside
+Put `aeroshipsaver-1.1.0.jar` in the `mods` folder of your singleplayer profile (alongside
 Create + Aeronautics + Sable). Saved ships are written to `enxv_aeronautics_structures` in
 your game directory as `.excraft` files.
 
@@ -77,4 +78,4 @@ This repo contains only the original source. The third-party binaries it builds 
    all of them **except** `AeronauticsStructureToolMod.class` and `ModPayloads.class` (those
    two are replaced by stubs in `src`). They get packaged into the output jar.
 
-Then `./gradlew build` → `build/libs/aeroshipsaver-1.0.0.jar`.
+Then `./gradlew build` → `build/libs/aeroshipsaver-1.1.0.jar`.
